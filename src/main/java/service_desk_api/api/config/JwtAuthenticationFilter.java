@@ -38,17 +38,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// TODO Auto-generated method stub
 		
 		final String authHeader = request.getHeader("Authorization");
-		System.out.println(authHeader);
-		final String jwt;
-		final String username;
 		
-		if(authHeader == null || !authHeader.startsWith("Bearer")) {
+		if(authHeader == null || !authHeader.startsWith("Bearer ")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 		
-		jwt = authHeader.substring(7); //Extrai o token após o "Bearer"
-		username = jwtUtil.extractEmail(jwt);
+		System.out.println(authHeader);
+		
+		final String jwt = authHeader.substring(7);
+		String username = null;
+		
+		try {
+			username = jwtUtil.extractEmail(jwt);
+		} catch (Exception e) {
+			System.out.println("Token inválido recebido no header: " + e.getMessage());
+			filterChain.doFilter(request, response);
+			return;
+		}
 		
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
@@ -62,6 +69,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				
 				SecurityContextHolder.getContext().setAuthentication(authToken);
+				System.out.println("Usuário autenticado no filtro: " + username);
+				System.out.println("Contexto atual: " + SecurityContextHolder.getContext().getAuthentication());
 			}
 		}
 		

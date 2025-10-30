@@ -10,6 +10,7 @@ public class ApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
+		System.out.println("Dá uma olhada nisto: " + new BCryptPasswordEncoder().encode("123456"));
 	}
 	
 	public void run(String... args) throws Exception {

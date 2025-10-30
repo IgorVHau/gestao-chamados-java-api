@@ -2,6 +2,7 @@ package service_desk_api.api.dto;
 
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
@@ -29,9 +30,9 @@ This method will be removed in the 1.0 release.*/
 	private static final long EXPIRATION_TIME = 1000 * 60 * 60;
 	
 	private Key generateKey(String secretKey) {
-		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-		return Keys.hmacShaKeyFor(keyBytes);
-		//return Keys.hmacShaKeyFor(secretKey.getBytes());
+		//byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		//return Keys.hmacShaKeyFor(keyBytes);
+		return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 	}
 	
 	public String generateToken(String email) {

@@ -5,11 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import service_desk_api.api.repository.UsuarioRepository;
@@ -23,8 +27,8 @@ public class AuthController {
 	
 	private final UsuarioRepository repository;
 	
-	//@Autowired
-	//private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -34,19 +38,36 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest request){
+	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 		try {
+			System.out.println("AuthController: " + request.getEmail() + " " + request.getSenha());
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha())
+				);
+			
+			String token = jwtUtil.generateToken(request.getEmail());
+			System.out.println("Token gerado: " + token);
+			return ResponseEntity.ok(Collections.singletonMap("token", token));
+		} catch (BadCredentialsException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(Collections.singletonMap("erro", "Credenciais inválidas"));
+		}
+	}
+	
+//	@PostMapping("/login")
+//	public ResponseEntity<?> login(@RequestBody LoginRequest request){
+//		try {
 //			authenticationManager.authenticate(
 //					new UsernamePasswordAuthenticationToken(
 //							request.getEmail(), request.getSenha()));
 			
 			
-			String token = jwtUtil.generateToken(request.getEmail());
-			
-			return ResponseEntity.ok(token);
-		} catch (Exception e) {
-			return ResponseEntity.status(401).body("Credenciais inválidas!");
-		}
+//			String token = jwtUtil.generateToken(request.getEmail());
+//			
+//			return ResponseEntity.ok(token);
+//		} catch (Exception e) {
+//			return ResponseEntity.status(401).body("Credenciais inválidas!");
+//		}
 		
 //		var usuario = repository.findByEmail(request.getEmail());
 //		
@@ -61,6 +82,6 @@ public class AuthController {
 //		String token = jwtUtil.generateToken(request.getEmail());
 //		
 //		return ResponseEntity.ok(token);
-	}
+//	}
 
 }
