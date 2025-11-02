@@ -25,7 +25,7 @@ public class DataLoader {
 				Usuario admin = new Usuario(
 						"Fernando",
 						"admin@email.com", 
-						encoder.encode("123"),
+						encoder.encode("123456"),
 						"ADMIN"
 						);
 				repository.save(admin);
@@ -35,7 +35,7 @@ public class DataLoader {
 				Usuario user = new Usuario(
 						"Jorge",
 						"user@email.com",
-						encoder.encode("1234"),
+						encoder.encode("654321"),
 						"USER"
 						);
 				repository.save(user);
@@ -44,7 +44,7 @@ public class DataLoader {
 			if(chamadoRepository.findAll().isEmpty()) {
 				Chamado chamado = Chamado.builder()
 					.titulo("Acesso negado ao servidor remoto")
-					.descricao("O usuário Mário não consegue acessar o servidor da empresa Bowser cia. Conceder acesso ao encanador.")
+					.descricao("O usuário Rodolfo não consegue acessar o servidor da LightyearX. Conceder acesso ao funcionário.")
 					.status(Status.ABERTO)
 					.criadoEm(LocalDateTime.now())
 					.atualizadoEm(LocalDateTime.now())

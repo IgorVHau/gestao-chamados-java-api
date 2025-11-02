@@ -22,17 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		System.out.println("Olha o valor de userame em loadUserByUsername em CustomUser: " + username);
 		Usuario usuario = usuarioRepository.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
 		
-		//return User.builder()
-				//.username(usuario.getEmail())
-				//.password(usuario.getSenha())
-				//.roles("USER")
-				//.build();
-		//return User.withUsername(usuario.getEmail()).password(usuario.getSenha()).authorities("USER").build();
 		return new User(
 				usuario.getEmail(),
 				usuario.getSenha(),

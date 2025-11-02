@@ -22,22 +22,6 @@ import java.util.HashMap;
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	//public ResponseEntity<Map<String,String>> handleValidationErrors(MethodArgumentNotValidException ex) {
-		//Map<String, String> errors = new HashMap<>();
-		//ex.getBindingResult().getFieldErrors().forEach(error ->
-				//errors.put(error.getField(), error.getDefaultMessage()));
-		//return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
-//	public ResponseEntity<ApiResponse<Object>> handleValidationErrors(MethodArgumentNotValidException ex) {	
-//		return ResponseEntity
-//				.status(HttpStatus.BAD_GATEWAY)
-//				.body(ApiResponse.builder()
-//						.timestamp(LocalDateTime.now())
-//						.status(HttpStatus.BAD_REQUEST.value())
-//						.message("Erro de validação: " + ex.getMessage())
-//						.data(null)
-//						.build()
-//						);
-//	}
 	public ResponseEntity<ApiResponse<?>> handleValidationErrors(MethodArgumentNotValidException ex) {
 		String errors = ex.getBindingResult()
 				.getFieldErrors()
@@ -51,13 +35,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
-	//public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
 	public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException ex) {
-		//Map<String, String> error = new HashMap<>();
-		//error.put("erro", 
-				//ex.getMessage().contains("not one of the values accepted for Enum class") ? "O valor do status não é permitido" : ex.getMessage()
-				//);
-		//return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
 		System.out.println("Erro de Hantaime.");
 		return ResponseEntity
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -76,13 +54,6 @@ public class GlobalExceptionHandler {
 				.body(ApiResponse.error("Erro de serialização: " + message, HttpStatus.INTERNAL_SERVER_ERROR.value()));
 	}
 	
-//	@ExceptionHandler(ExpiredJwtException.class)
-//	public ResponseEntity<ApiResponse<?>> handleExpiredJwtTokenException(ExpiredJwtException ex) {
-//		return ResponseEntity
-//				.status(HttpStatus.FORBIDDEN)
-//				.body(ApiResponse.error("Token expirado: ", HttpStatus.FORBIDDEN.value()));
-//	}
-//	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ApiResponse<?>> handleGenericException(Exception e) {
 		System.out.println("Erro genericão");

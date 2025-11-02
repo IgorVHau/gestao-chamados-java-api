@@ -45,13 +45,18 @@ public class SecurityConfig { //extends WebSecurityConfiguration {
 			.authenticationProvider(authenticationProvider(userDetailsService,passwordEncoder()))
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests(auth -> auth
-					//.requestMatchers("/h2-console/**","/auth/login").permitAll() // libera login
-					.requestMatchers("/h2-console/**","/auth/login").permitAll()
+					.requestMatchers(
+							"/h2-console/**",
+							"/auth/login",
+							"/v3/api-docs/**",
+							"/swagger-ui/**",
+							"/swagger-ui.html"
+							).permitAll()
 					.requestMatchers(HttpMethod.GET, "/chamados/**").hasAnyRole("USER", "ADMIN")
 					.requestMatchers(HttpMethod.POST, "/chamados/**").hasAnyRole("ADMIN")
 					.requestMatchers(HttpMethod.PUT, "/chamados/**").hasAnyRole("ADMIN")
 					.requestMatchers(HttpMethod.DELETE, "/chamados/**").hasAnyRole("ADMIN")
-					.anyRequest().authenticated() //exige autenticação nos demais
+					.anyRequest().authenticated()
 					);
 		return http.build();
 	}
@@ -61,25 +66,7 @@ public class SecurityConfig { //extends WebSecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 	
-//	@Bean
-//	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//		return config.getAuthenticationManager();
-//	}
-	
-//	public AuthenticationManager authenticationManager(
-//			HttpSecurity http, 
-//			BCryptPasswordEncoder bCryptPasswordEncoder,
-//			UserDetailsService userDetailsService
-//			) throws Exception {		
-//		return http.getSharedObject(AuthenticationManagerBuilder.class)
-//				.userDetailsService(userDetailsService)
-//				.passwordEncoder(bCryptPasswordEncoder).;
-//	}
-	
 	@Bean
-	//public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-		//return http.getSharedObject(AuthenticationManager.class);
-	//}
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}

@@ -30,21 +30,11 @@ import service_desk_api.api.dto.JwtUtil;
 @RequestMapping("/auth")
 public class AuthController {
 	
-	//private UsuarioRepository repository;
-	private UsuarioService service;
-	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
-	
-	public AuthController(
-			//UsuarioRepository repository, 
-			UsuarioService service) {
-		//this.repository = repository;
-		this.service = service;
-	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
@@ -61,49 +51,5 @@ public class AuthController {
 					.body(Collections.singletonMap("erro", "Credenciais inválidas"));
 		}
 	}
-	
-	@GetMapping("/login")
-	public ResponseEntity<?> criptografar(@RequestBody String senha) {
-		try {
-			return ResponseEntity.ok(Collections.singletonMap("senha", new BCryptPasswordEncoder().encode(senha)));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(Collections.singletonMap("mensagem", "chamada não válida"));
-		}
-	}
-	
-	public void save() {
-		
-	}
-	
-//	@PostMapping("/login")
-//	public ResponseEntity<?> login(@RequestBody LoginRequest request){
-//		try {
-//			authenticationManager.authenticate(
-//					new UsernamePasswordAuthenticationToken(
-//							request.getEmail(), request.getSenha()));
-			
-			
-//			String token = jwtUtil.generateToken(request.getEmail());
-//			
-//			return ResponseEntity.ok(token);
-//		} catch (Exception e) {
-//			return ResponseEntity.status(401).body("Credenciais inválidas!");
-//		}
-		
-//		var usuario = repository.findByEmail(request.getEmail());
-//		
-//		if(usuario == null || !usuario.getSenha().equals(request.getSenha())) {
-//			return ResponseEntity.status(401).body("Credenciais inválidas");
-//		}
-		
-		
-		
-		//String token = "oi";
-		//String token = jwtUtil.extractEmail(request.getEmail());
-//		String token = jwtUtil.generateToken(request.getEmail());
-//		
-//		return ResponseEntity.ok(token);
-//	}
 
 }

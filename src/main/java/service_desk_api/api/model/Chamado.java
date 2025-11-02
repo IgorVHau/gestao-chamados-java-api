@@ -37,12 +37,10 @@ public class Chamado {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	//@DateTimeFormat(pattern="dd/MM/yyyy hh:mm:ss")
 	@JsonFormat(pattern="dd/MM/yyyy hh:mm:ss")
 	@PastOrPresent(message = "A data de criação não pode estar no futuro.")
 	private LocalDateTime criadoEm;
 	
-	//@DateTimeFormat(pattern="dd/MM/yyyy hh:mm:ss")
 	@JsonFormat(pattern="dd/MM/yyyy hh:mm:ss")
 	@PastOrPresent(message = "A data de atualização não pode estar no futuro.")
 	private LocalDateTime atualizadoEm;

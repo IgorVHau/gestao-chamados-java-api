@@ -41,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			FilterChain filterChain
 			)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub 
 		
 		final String authHeader = request.getHeader("Authorization");
 		
@@ -57,19 +56,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		
 		try {
 			username = jwtUtil.extractEmail(jwt);
-//		} catch (ExpiredJwtException e) {
-//			System.out.println("Token expirado: " + e.getMessage());
-//			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//			response.setContentType("application/json");
-//			
-//			ApiResponse<?> apiResponse = ApiResponse.error("Token expirado. Faça o login novamente.", HttpStatus.FORBIDDEN.value());
-//			new ObjectMapper().writeValue(response.getOutputStream(), apiResponse);
-//			return;
 		} catch (Exception e) {
 			System.out.println("Token inválido recebido no header: " + e.getMessage());
-			System.out.println("Olha o erro aí: " + e);
-			System.out.println("Olha o request: " + request); 
-			System.out.println("Olha o response: " + response); 
 			filterChain.doFilter(request, response);
 			return;
 		}
