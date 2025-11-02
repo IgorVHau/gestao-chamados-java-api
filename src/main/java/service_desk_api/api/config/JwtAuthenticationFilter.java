@@ -3,6 +3,12 @@ package service_desk_api.api.config;
 import java.io.IOException;
 
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.jsonwebtoken.ExpiredJwtException;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +20,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import service_desk_api.api.dto.ApiResponse;
 import service_desk_api.api.dto.JwtUtil;
 
 @Component
@@ -35,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			FilterChain filterChain
 			)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		
 		final String authHeader = request.getHeader("Authorization");
 		
@@ -51,8 +57,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		
 		try {
 			username = jwtUtil.extractEmail(jwt);
+//		} catch (ExpiredJwtException e) {
+//			System.out.println("Token expirado: " + e.getMessage());
+//			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//			response.setContentType("application/json");
+//			
+//			ApiResponse<?> apiResponse = ApiResponse.error("Token expirado. Faça o login novamente.", HttpStatus.FORBIDDEN.value());
+//			new ObjectMapper().writeValue(response.getOutputStream(), apiResponse);
+//			return;
 		} catch (Exception e) {
 			System.out.println("Token inválido recebido no header: " + e.getMessage());
+			System.out.println("Olha o erro aí: " + e);
+			System.out.println("Olha o request: " + request); 
+			System.out.println("Olha o response: " + response); 
 			filterChain.doFilter(request, response);
 			return;
 		}

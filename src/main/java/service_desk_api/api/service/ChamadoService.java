@@ -2,8 +2,10 @@ package service_desk_api.api.service;
 
 import org.springframework.stereotype.Service;
 import service_desk_api.api.model.Chamado;
+import service_desk_api.api.model.Status;
 import service_desk_api.api.repository.ChamadoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ public class ChamadoService {
 	}
 	
 	public Chamado criar(Chamado chamado) {
+		System.out.println("Status: " + chamado.getStatus().toString());
 		return repository.save(chamado);
 	}
 	

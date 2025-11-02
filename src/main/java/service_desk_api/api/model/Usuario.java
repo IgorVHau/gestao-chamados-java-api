@@ -2,6 +2,8 @@ package service_desk_api.api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Email;
 
 @Entity
@@ -12,17 +14,20 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Email
+	@Email(message = "Formato de e-mail inválido.")
 	@Column(unique = true)
 	private String email;
 	
 	@NotBlank
+	@Size(min = 6, message = "A senha deve ter no mínimo 6 caractéres.")
 	private String senha;
 	
 	@NotBlank
+	@Size(min = 2, max = 100, message = "O nome deve ter entre 2 a 100 caractéres.")
 	private String nome;
 	
 	@NotBlank
+	@Pattern(regexp = "^(USER|ADMIN)$", message = "A função deve ser USER ou ADMIN.")
 	private String role;
 	
 	public Usuario(){

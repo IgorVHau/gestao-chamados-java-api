@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import service_desk_api.api.service.ChamadoService;
+import service_desk_api.api.dto.ApiResponse;
 import service_desk_api.api.model.Chamado;
 
 import java.time.LocalDateTime;
@@ -31,8 +32,13 @@ public class ChamadoController {
 	//public List<Chamado> listar(){
 		//return service.listarTodos();
 	//}
-	public ResponseEntity<List<Chamado>> listar() {
-		return ResponseEntity.ok(service.listarTodos());
+	//public ResponseEntity<List<Chamado>> listar() {
+		//return ResponseEntity.ok(service.listarTodos());
+	//}
+	public ResponseEntity<ApiResponse<List<Chamado>>> listar() {
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(ApiResponse.success("Lista de chamados", service.listarTodos(), 200));
 	}
 	
 	@GetMapping("/{id}")
@@ -40,45 +46,59 @@ public class ChamadoController {
 //		return service.buscarPorId(id)
 //				.orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
 //	}
-	public ResponseEntity<Chamado> buscarPorId(@PathVariable Long id) {
+	public ResponseEntity<ApiResponse<Chamado>> buscarPorId(@PathVariable Long id) {
+		//Chamado usuarioEncontrado = service.buscarPorId(id)
+				//.orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+		//return ResponseEntity.ok(usuarioEncontrado);
 		Chamado usuarioEncontrado = service.buscarPorId(id)
-				.orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
-		return ResponseEntity.ok(usuarioEncontrado);
+				.orElseThrow(() -> new RuntimeException("Chamado não encontrado."));
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(ApiResponse.success("Usuário encontrado.", usuarioEncontrado, 200));
 	}
 
 	@PostMapping
 //	public Chamado criar(@RequestBody @Valid Chamado chamado) {
 //		return service.criar(chamado);
 //	}
-	public ResponseEntity<Chamado> criar(@RequestBody @Valid Chamado chamado) {
-		chamado.setCriadoEm(LocalDateTime.now());
-		chamado.setAtualizadoEm(LocalDateTime.now());
+	public ResponseEntity<ApiResponse<Chamado>> criar(@RequestBody @Valid Chamado chamado) {
 		var chamadoCriado = service.criar(chamado);
-		return ResponseEntity.status(HttpStatus.CREATED).body(chamadoCriado);
+		//return ResponseEntity.status(HttpStatus.CREATED).body(chamadoCriado);
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(ApiResponse.success("Chamado criado com sucesso", chamadoCriado, 201));
 	}
 	
 	@PutMapping("/{id}")
 //	public Chamado atualizar(@PathVariable Long id, @RequestBody @Valid Chamado novoChamado) {
 //		return service.atualizar(id, novoChamado);
 //	}
-	public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid Chamado novoChamado) {
+	public ResponseEntity<ApiResponse<Chamado>> atualizar(@PathVariable Long id, @RequestBody @Valid Chamado novoChamado) {
+		//var novoChamadoAtualizado = service.atualizar(id, novoChamado);
+		//return ResponseEntity.ok(novoChamadoAtualizado);
 		var novoChamadoAtualizado = service.atualizar(id, novoChamado);
-		novoChamadoAtualizado.setAtualizadoEm(LocalDateTime.now());
-		return ResponseEntity.ok(novoChamadoAtualizado);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(ApiResponse.success("Chamado atualizado com sucesso", novoChamadoAtualizado, 200));
 	}
 	
 	@DeleteMapping("/{id}")
 //	public void deletar(@PathVariable Long id) {
 //		service.deletar(id);
 //	}
-	public ResponseEntity<?> deletar(@PathVariable Long id) {
-		try {
-			service.buscarPorId(id).orElseThrow(() -> new RuntimeException());
-			service.deletar(id);
-			return ResponseEntity.ok("Chamado deletado!");
-		} catch (RuntimeException re) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<ApiResponse<String>> deletar(@PathVariable Long id) {
+//		try {
+//			service.buscarPorId(id).orElseThrow(() -> new RuntimeException());
+//			service.deletar(id);
+//			return ResponseEntity.ok("Chamado deletado!");
+//		} catch (RuntimeException re) {
+//			return ResponseEntity.notFound().build();
+//		}
+		service.buscarPorId(id).orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+		service.deletar(id);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(ApiResponse.success("Chamado deletado com sucesso.", null, 200));
 	}
 	
 }
