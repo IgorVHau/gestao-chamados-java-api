@@ -3,6 +3,7 @@ package service_desk_api.api.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +45,12 @@ public class SecurityConfig { //extends WebSecurityConfiguration {
 			.authenticationProvider(authenticationProvider(userDetailsService,passwordEncoder()))
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/h2-console/**","/auth/login").permitAll() // libera login
+					//.requestMatchers("/h2-console/**","/auth/login").permitAll() // libera login
+					.requestMatchers("/h2-console/**","/auth/login").permitAll()
+					.requestMatchers(HttpMethod.GET, "/chamados/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.POST, "/chamados/**").hasAnyRole("ADMIN")
+					.requestMatchers(HttpMethod.PUT, "/chamados/**").hasAnyRole("ADMIN")
+					.requestMatchers(HttpMethod.DELETE, "/chamados/**").hasAnyRole("ADMIN")
 					.anyRequest().authenticated() //exige autenticação nos demais
 					);
 		return http.build();

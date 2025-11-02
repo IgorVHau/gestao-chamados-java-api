@@ -1,7 +1,11 @@
 package service_desk_api.api.service;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +32,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 				//.password(usuario.getSenha())
 				//.roles("USER")
 				//.build();
-		return User.withUsername(usuario.getEmail()).password(usuario.getSenha()).authorities("USER").build();
-	}
+		//return User.withUsername(usuario.getEmail()).password(usuario.getSenha()).authorities("USER").build();
+		return new User(
+				usuario.getEmail(),
+				usuario.getSenha(),
+				Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + usuario.getRole())));	
+			}
 	
 }
