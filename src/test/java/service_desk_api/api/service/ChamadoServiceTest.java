@@ -39,12 +39,6 @@ class ChamadoServiceTest {
 	@Test
 	void deveRetornarChamadoQuandoBuscarPorIdExistente() {
 		
-//		Chamado chamado = Chamado.builder()
-//				.id(1L)
-//				.titulo("Teste")
-//				.descricao("Chamado de teste")
-//				.status(Status.ABERTO)
-//				.build();
 		Chamado chamado = criarChamado();
 		
 		when(chamadoRepository.findById(1L)).thenReturn(Optional.of(chamado));
