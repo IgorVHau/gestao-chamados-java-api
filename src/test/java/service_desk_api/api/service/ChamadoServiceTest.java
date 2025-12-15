@@ -24,8 +24,7 @@ class ChamadoServiceTest {
 	@InjectMocks
 	private ChamadoService chamadoService;
 	
-	@Test
-	void deveBuscarChamadoPorIdComSucesso() {
+	Chamado criarChamado() {
 		
 		Chamado chamado = Chamado.builder()
 				.id(1L)
@@ -33,6 +32,20 @@ class ChamadoServiceTest {
 				.descricao("Chamado de teste")
 				.status(Status.ABERTO)
 				.build();
+		
+		return chamado;
+	}
+	
+	@Test
+	void deveRetornarChamadoQuandoBuscarPorIdExistente() {
+		
+//		Chamado chamado = Chamado.builder()
+//				.id(1L)
+//				.titulo("Teste")
+//				.descricao("Chamado de teste")
+//				.status(Status.ABERTO)
+//				.build();
+		Chamado chamado = criarChamado();
 		
 		when(chamadoRepository.findById(1L)).thenReturn(Optional.of(chamado));
 		
@@ -44,5 +57,16 @@ class ChamadoServiceTest {
 		verify(chamadoRepository, times(1)).findById(1L);
 	}
 	
+	@Test
+	void deveRetornarOptionalVazioQuandoBuscarPorIdInexistente() {
+		
+		when(chamadoRepository.findById(99L)).thenReturn(Optional.empty());
+		
+		Optional<Chamado> resultado = chamadoService.buscarPorId(99L);
+		
+		assertTrue(resultado.isEmpty());
+		
+		verify(chamadoRepository, times(1)).findById(99L);
+	}
 
 }
