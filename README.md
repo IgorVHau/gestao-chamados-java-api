@@ -90,44 +90,47 @@ O fluxo de autenticação pode ser descrito da seguinte forma:
 ## 📲 Endpoints principais
 
 Abaixo os métodos HTTP e rotas para realização das chamadas. Todos os endpoints abaixo exigem autenticação JWT.
-🔓 Acesso permitido para usuários com perfil USER
-🔐 Acesso permitido para usuários com perfil ADMIN
 
-🟡 GET /chamados 🔓🔐
+🔑 Legenda de permissões
+- 🔓 USER
+
+- 🔐 ADMIN
+
+🟡 **GET /chamados** 🔓🔐
 
 Objetivo: Ler todos os chamados registrados.
 
-🟡 GET /chamados/{id} 🔓🔐
+🟡 **GET /chamados/{id}** 🔓🔐
 
 Objetivo: Ler o chamado correspondente ao id selecionado.
 
-🟢 POST /chamados 🔐
+🟢 **POST /chamados** 🔐
 
 Objetivo: Criar um chamado para ser registrado no banco de dados. 
 
 Exemplo:
-**Body (JSON)**
+_Body (JSON)_
 ```json
 {
 	"titulo": "Acesso criado para Jonas",
-	"descricao": "Jonas recebeu acesso",
+	"descricao": "Jonas recebeu acesso ao e-mail newUser@email.com.",
 	"status": "ABERTO"
 }
 ```
 
-🔵 PUT /chamados/{id} 🔐
+🔵 **PUT /chamados/{id}** 🔐
 
 Objetivo: Editar um ou mais campos do chamado correspondente ao id selecionado.
 
 Exemplo:
-**Body (JSON)**
+_Body (JSON)_
 ```json
 {
 	"status": "FECHADO"
 }
 ```
 
-🔴 DELETE /chamados/{id} 🔐
+🔴 **DELETE /chamados/{id}** 🔐
 
 Objetivo: Remover o chamado no banco de dados.
 
