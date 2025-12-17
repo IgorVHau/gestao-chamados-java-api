@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 
 import service_desk_api.api.service.ChamadoService;
 import service_desk_api.api.dto.ApiResponse;
+import service_desk_api.api.exception.ResourceNotFoundException;
 import service_desk_api.api.model.Chamado;
 
 import java.time.LocalDateTime;
@@ -39,7 +40,8 @@ public class ChamadoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<Chamado>> buscarPorId(@PathVariable Long id) {
 		Chamado usuarioEncontrado = service.buscarPorId(id)
-				.orElseThrow(() -> new RuntimeException("Chamado não encontrado."));
+				//.orElseThrow(() -> new RuntimeException("Chamado não encontrado."));
+				.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(ApiResponse.success("Usuário encontrado.", usuarioEncontrado, 200));
@@ -57,16 +59,17 @@ public class ChamadoController {
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<ApiResponse<Chamado>> atualizar(@PathVariable Long id, @RequestBody @Valid Chamado novoChamado) {
+		service.buscarPorId(id).orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
 		var novoChamadoAtualizado = service.atualizar(id, novoChamado);
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(ApiResponse.success("Chamado atualizado com sucesso", novoChamadoAtualizado, 200));
+				.body(ApiResponse.success("Chamado atualizado com sucesso.", novoChamadoAtualizado, 200));
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<ApiResponse<String>> deletar(@PathVariable Long id) {
-		service.buscarPorId(id).orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+		service.buscarPorId(id).orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
 		service.deletar(id);
 		return ResponseEntity
 				.status(HttpStatus.OK)

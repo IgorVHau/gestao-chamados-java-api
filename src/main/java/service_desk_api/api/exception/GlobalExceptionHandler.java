@@ -36,7 +36,6 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException ex) {
-		System.out.println("Erro de Hantaime.");
 		return ResponseEntity
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.body(ApiResponse.error("Erro interno: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
@@ -54,9 +53,15 @@ public class GlobalExceptionHandler {
 				.body(ApiResponse.error("Erro de serialização: " + message, HttpStatus.INTERNAL_SERVER_ERROR.value()));
 	}
 	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ApiResponse<?>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+		return ResponseEntity
+				.status(HttpStatus.NOT_FOUND)
+				.body(ApiResponse.error(ex.getMessage(), HttpStatus.NOT_FOUND.value()));
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ApiResponse<?>> handleGenericException(Exception e) {
-		System.out.println("Erro genericão");
 		return ResponseEntity
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.body(ApiResponse.error("Erro inesperado: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()));
