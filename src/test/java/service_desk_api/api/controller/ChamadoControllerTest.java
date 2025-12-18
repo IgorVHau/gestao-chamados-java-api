@@ -48,7 +48,7 @@ class ChamadoControllerTest {
 		
 		mockMvc.perform(get("/chamados/99"))
 			.andExpect(status().isNotFound())
-			//.andExpect(jsonPath("$.timestamp").value(LocalDateTime.now()))
+			.andExpect(jsonPath("$.timestamp").isNotEmpty())
 			.andExpect(jsonPath("$.status").value(404))
 			.andExpect(jsonPath("$.message").value("Chamado não encontrado."))
 			.andExpect(jsonPath("$.data").isEmpty());
