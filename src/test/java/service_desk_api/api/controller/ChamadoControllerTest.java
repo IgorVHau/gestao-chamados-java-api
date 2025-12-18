@@ -33,14 +33,6 @@ class ChamadoControllerTest {
 	@MockBean
 	private ChamadoService chamadoService;
 	
-	/*
-	@MockBean
-	private JwtUtil jwtUtil;
-	
-	@MockBean
-	private UserDetailsService userDetailsService;
-	*/
-	
 	@Test
 	void deveRetornar404QuandoBuscarPorIdInexistente() throws Exception{
 		
