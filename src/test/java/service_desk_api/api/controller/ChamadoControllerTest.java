@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,6 +24,7 @@ import service_desk_api.api.service.ChamadoService;
 		controllers = ChamadoController.class,
 		excludeAutoConfiguration = SecurityAutoConfiguration.class
 		)
+@Import(TestSecurityConfig.class)
 class ChamadoControllerTest {
 	
 	@Autowired
@@ -31,11 +33,13 @@ class ChamadoControllerTest {
 	@MockBean
 	private ChamadoService chamadoService;
 	
+	/*
 	@MockBean
 	private JwtUtil jwtUtil;
 	
 	@MockBean
 	private UserDetailsService userDetailsService;
+	*/
 	
 	@Test
 	void deveRetornar404QuandoBuscarPorIdInexistente() throws Exception{
