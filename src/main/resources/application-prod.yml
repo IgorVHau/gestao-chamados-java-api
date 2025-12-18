@@ -15,3 +15,10 @@ spring:
 jwt:
   secret-key: ${JWT_SECRET}
   expiration: 3600000
+ 
+logging:
+  level:
+    root: WARN
+    service_desk_api: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: OFF

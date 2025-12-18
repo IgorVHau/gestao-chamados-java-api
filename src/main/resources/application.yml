@@ -1,3 +1,21 @@
 spring:
+  application:
+    name: service-desk-api
+
   profiles:
     active: dev
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+info:
+  app:
+    name: Service Desk API
+    description: API para gestão de chamados
+    version: 1.0.0
