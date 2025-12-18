@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api
+
+  datasource:
+    url: jdbc:h2:mem:servicedeskdb
+    driverClassName: org.h2.Driver
+    username:
+    password:
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secret-key: SuperChaveSecretaDosSonhosDeQualquerAPIRest
+  expiration: 3600000
