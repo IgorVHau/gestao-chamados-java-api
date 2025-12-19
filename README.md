@@ -44,12 +44,13 @@ mvn test
 
 O projeto segue uma arquitetura em camadas:
 
-- **Controller** – exposição dos endpoints REST
-- **Service** – regras de negócio
-- **Repository** – acesso a dados via JPA
-- **Model / DTO** – entidades e objetos de transporte
-- **Security** – autenticação e autorização com JWT
-- **Exception Handler** – tratamento centralizado de erros
+- **[Controller](src/main/java/service_desk_api/api/controller)** – exposição dos endpoints REST
+- **[Service](src/main/java/service_desk_api/api/service)** – regras de negócio
+- **[Repository](src/main/java/service_desk_api/api/repository)** – acesso a dados via JPA
+- **[Model](src/main/java/service_desk_api/api/model) / [DTO](src/main/java/service_desk_api/api/dto)** – entidades e objetos de transporte
+- **[Security](src/main/java/service_desk_api/api/security)** – autenticação e autorização com JWT
+- **[Config](src/main/java/service_desk_api/api/config)** - configurações da aplicação (segurança, OpenAPI, beans)
+- **[Exception Handler](src/main/java/service_desk_api/api/exception)** – tratamento centralizado de erros
 
 ## ▶️ Como executar o projeto
 
