@@ -19,10 +19,26 @@ O projeto aplica boas práticas de arquitetura, segurança, validação e docume
 - Spring Boot 3
 - Spring Data JPA
 - Spring Security
+- Spring Boot Actuator
 - JWT (jjwt)
 - H2 Database
 - Lombok
 - Springdoc OpenAPI (Swagger)
+- JUnit 5
+- Mockito
+
+## 🧪 Testes
+
+O projeto possui testes automatizados utilizando **JUnit 5** e **Mockito**, cobrindo diferentes camadas da aplicação.
+
+Foram implementados 2 tipos de testes, [os testes unitários de serviço](src/test/java/service_desk_api/api/service/ChamadoServiceTest.java) e [testes de camada Web](src/test/java/service_desk_api/api/controller/ChamadoControllerTest.java).
+Os testes unitários de serviço validam regras de negócio de forma isolada com dependências mockadas. Os testes de camada Web (Controller) utilizam anotações `WebMvcTest` e `MockMvc` para validação de estrutura das respostas JSON, status HTTP, tratamento de exceções e contratos dos endpoints.
+
+Para executar todos os testes automatizados, execute o comando:
+
+```bash
+mvn test
+```
 
 ## 📐 Arquitetura
 
@@ -47,17 +63,25 @@ cd gestao-chamados-java-api
 mvn spring-boot:run
 ```
 
-A aplicação subirá em: http://localhost:8080
+A aplicação subirá em: 
+
+```bash 
+http://localhost:8080
+```
 
 ## 📚 Documentação da API
 
 Após iniciar a aplicação, a documentação estará disponível em:
 
 - Swagger UI:  
-  👉 http://localhost:8080/swagger-ui/index.html
+```bash
+http://localhost:8080/swagger-ui/index.html
+```
 
 - OpenAPI JSON:  
-  👉 http://localhost:8080/v3/api-docs
+```bash
+http://localhost:8080/v3/api-docs
+```
 
 ## 🔐 Segurança
 
@@ -134,6 +158,26 @@ _Body (JSON)_
 
 Objetivo: Remover o chamado no banco de dados.
 
+## 🔬 Monitoramento e Observabilidade
+
+A aplicação utiliza **Spring Boot Actuator** para expor informações operacionais e de build. Para monitorar a aplicação por meio dessa ferramenta, verifique as informações abaixo.
+
+| Método HTTP | Endpoint | Permissão |
+|:----------:|:----------|:----------|
+|🟡GET|/actuator/info|ADMIN🔐|
+
+Exemplo de informações expostas:
+- Nome e versão da aplicação
+- Dados de build (artifact, versão, data)
+- Metadados do Git (branch, commit, timestamp)
+
+Essas informações são acessadas através do [pom.xml](pom.xml) e do repositório Git.
+
+## 🗂️ Perfis de ambiente
+
+O projeto possui perfis de ambientes (dev e prod) para simular comportamentos diferentes entre desenvolvimento e produção. 
+No perfil [dev](src/main/resources/application-dev.yml), a aplicação faz uso de banco H2 em memória, logs SQL habilitados e schema criado automaticamente. O foco é mais voltado para desenvolvimento local.
+No perfil [prod](src/main/resources/application-prod.yml), as configurações estão preparadas para banco externo (PostgreSQL), validação de schema e credenciais via variáveis de ambiente. O ambiente é pensado para simular execução em ambientes produtivos.
 
 ## 📌 Observação
 Este projeto foi desenvolvido com foco em aprendizado prático, evolução técnica e aplicação de boas práticas no ecossistema Spring.
