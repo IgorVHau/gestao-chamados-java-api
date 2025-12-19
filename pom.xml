@@ -92,6 +92,11 @@
     		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     		<version>2.6.0</version>
 		</dependency>
+		<!-- Actuator -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -119,6 +124,34 @@
 						</exclude>
 					</excludes>
 				</configuration>
+				<executions>
+                	<execution>
+                    	<goals>
+                        	<goal>build-info</goal>
+                    	</goals>
+                	</execution>
+            	</executions>
+			</plugin>
+			<plugin>
+    			<groupId>pl.project13.maven</groupId>
+    			<artifactId>git-commit-id-plugin</artifactId>
+    			<version>4.9.10</version>
+    			<executions>
+        			<execution>
+            			<goals>
+                			<goal>revision</goal>
+            			</goals>
+        			</execution>
+    			</executions>
+    			<configuration>
+    				<generateGitPropertiesFile>true</generateGitPropertiesFile>
+    				<gitPropertiesPath>${project.build.outputDirectory}/META-INF</gitPropertiesPath>
+    				<includeOnlyProperties>
+      					<includeOnlyProperty>git.branch</includeOnlyProperty>
+      					<includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
+      					<includeOnlyProperty>git.commit.time</includeOnlyProperty>
+    				</includeOnlyProperties>
+  				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gestao-chamados
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+jwt:
+  secret-key: ${JWT_SECRET}
+  expiration: 3600000
+ 
+logging:
+  level:
+    root: WARN
+    service_desk_api: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: OFF
