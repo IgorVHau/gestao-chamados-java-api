@@ -44,13 +44,14 @@ mvn test
 
 O projeto segue uma arquitetura em camadas:
 
-- **[Controller](src/main/java/service_desk_api/api/controller)** – exposição dos endpoints REST
-- **[Service](src/main/java/service_desk_api/api/service)** – regras de negócio
+- **[Controller](src/main/java/service_desk_api/api/controller)** – exposição dos endpoints REST e validação de entrada
+- **[Service](src/main/java/service_desk_api/api/service)** – regras de negócio e orquestração
 - **[Repository](src/main/java/service_desk_api/api/repository)** – acesso a dados via JPA
-- **[Model](src/main/java/service_desk_api/api/model) / [DTO](src/main/java/service_desk_api/api/dto)** – entidades e objetos de transporte
-- **[Security](src/main/java/service_desk_api/api/security)** – autenticação e autorização com JWT
-- **[Config](src/main/java/service_desk_api/api/config)** - configurações da aplicação (segurança, OpenAPI, beans)
-- **[Exception Handler](src/main/java/service_desk_api/api/exception)** – tratamento centralizado de erros
+- **[Model](src/main/java/service_desk_api/api/model) / [DTO](src/main/java/service_desk_api/api/dto)** – entidades de domínio e objetos de transporte
+- **[Config](src/main/java/service_desk_api/api/config)** - configurações da aplicação (segurança, OpenAPI, filtros, beans)
+- **[Exception Handler](src/main/java/service_desk_api/api/exception)** – tratamento centralizado de erros e respostas padronizadas
+
+A segurança (JWT, autenticação e autorização) é tratada de forma transversal, principalmente nas camadas de configuração e serviço.
 
 ## ▶️ Como executar o projeto
 
