@@ -39,9 +39,10 @@ public class ChamadoController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<Chamado>> buscarPorId(@PathVariable Long id) {
-		Chamado usuarioEncontrado = service.buscarPorId(id)
+		//Chamado usuarioEncontrado = service.buscarPorId(id)
 				//.orElseThrow(() -> new RuntimeException("Chamado não encontrado."));
-				.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
+				//.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
+		Chamado usuarioEncontrado = service.buscarPorIdOuFalhar(id);
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(ApiResponse.success("Usuário encontrado.", usuarioEncontrado, 200));
@@ -59,7 +60,7 @@ public class ChamadoController {
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<ApiResponse<Chamado>> atualizar(@PathVariable Long id, @RequestBody @Valid Chamado novoChamado) {
-		service.buscarPorId(id).orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
+		//service.buscarPorId(id).orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
 		var novoChamadoAtualizado = service.atualizar(id, novoChamado);
 		return ResponseEntity
 				.status(HttpStatus.OK)

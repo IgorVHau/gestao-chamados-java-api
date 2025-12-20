@@ -29,6 +29,10 @@ public class ChamadoService {
 		return repository.findById(id);
 	}
 	
+	public Chamado buscarPorIdOuFalhar(Long id) {
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
+	}
+	
 	public Chamado criar(Chamado chamado) {
 		System.out.println("Status: " + chamado.getStatus().toString());
 		return repository.save(chamado);
@@ -46,8 +50,10 @@ public class ChamadoService {
 //	}
 	
 	public Chamado atualizar(Long id, Chamado novoChamado) {
-		var chamadoAtual = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
+//		var chamadoAtual = repository.findById(id)
+//				.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
+		
+		var chamadoAtual = buscarPorIdOuFalhar(id);
 		
 		validarAtualizacao(chamadoAtual);
 		
