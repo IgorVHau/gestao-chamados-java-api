@@ -60,6 +60,13 @@ public class GlobalExceptionHandler {
 				.body(ApiResponse.error(ex.getMessage(), HttpStatus.NOT_FOUND.value()));
 	}
 	
+	@ExceptionHandler(BusinessException.class)
+	public ResponseEntity<ApiResponse<?>> handleBusinessException(BusinessException ex) {
+		return ResponseEntity
+				.status(HttpStatus.UNPROCESSABLE_ENTITY)
+				.body(ApiResponse.error(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY.value()));
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ApiResponse<?>> handleGenericException(Exception e) {
 		return ResponseEntity
