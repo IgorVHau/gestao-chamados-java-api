@@ -1,7 +1,6 @@
 package service_desk_api.api.config;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import service_desk_api.api.model.Chamado;
-import service_desk_api.api.model.Chamado.ChamadoBuilder;
 import service_desk_api.api.model.Status;
 import service_desk_api.api.model.Usuario;
 import service_desk_api.api.repository.ChamadoRepository;

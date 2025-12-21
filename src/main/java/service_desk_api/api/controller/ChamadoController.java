@@ -1,9 +1,7 @@
 package service_desk_api.api.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -13,9 +11,7 @@ import service_desk_api.api.dto.ApiResponse;
 import service_desk_api.api.exception.ResourceNotFoundException;
 import service_desk_api.api.model.Chamado;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import service_desk_api.api.service.ChamadoService;
 
@@ -39,9 +35,6 @@ public class ChamadoController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<Chamado>> buscarPorId(@PathVariable Long id) {
-		//Chamado usuarioEncontrado = service.buscarPorId(id)
-				//.orElseThrow(() -> new RuntimeException("Chamado não encontrado."));
-				//.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
 		Chamado usuarioEncontrado = service.buscarPorIdOuFalhar(id);
 		return ResponseEntity
 				.status(HttpStatus.OK)
@@ -60,7 +53,6 @@ public class ChamadoController {
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<ApiResponse<Chamado>> atualizar(@PathVariable Long id, @RequestBody @Valid Chamado novoChamado) {
-		//service.buscarPorId(id).orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
 		var novoChamadoAtualizado = service.atualizar(id, novoChamado);
 		return ResponseEntity
 				.status(HttpStatus.OK)

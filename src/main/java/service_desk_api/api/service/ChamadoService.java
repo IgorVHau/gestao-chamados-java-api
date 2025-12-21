@@ -8,7 +8,6 @@ import service_desk_api.api.model.Chamado;
 import service_desk_api.api.model.Status;
 import service_desk_api.api.repository.ChamadoRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,21 +37,7 @@ public class ChamadoService {
 		return repository.save(chamado);
 	}
 	
-//	public Chamado atualizar(Long id, Chamado novoChamado) {
-//		return repository.findById(id)
-//				.map(c -> {
-//					c.setTitulo(novoChamado.getTitulo());
-//					c.setDescricao(novoChamado.getDescricao());
-//					c.setStatus(novoChamado.getStatus());
-//					return repository.save(c);
-//				})
-//				.orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
-//	}
-	
 	public Chamado atualizar(Long id, Chamado novoChamado) {
-//		var chamadoAtual = repository.findById(id)
-//				.orElseThrow(() -> new ResourceNotFoundException("Chamado não encontrado."));
-		
 		var chamadoAtual = buscarPorIdOuFalhar(id);
 		
 		validarAtualizacao(chamadoAtual);

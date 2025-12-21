@@ -2,7 +2,6 @@ package service_desk_api.api.exception;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import service_desk_api.api.dto.ApiResponse;
 import service_desk_api.api.model.Status;
 
@@ -13,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
