@@ -1,11 +1,13 @@
 package service_desk_api.api.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import service_desk_api.api.exception.BusinessException;
 import service_desk_api.api.model.Chamado;
 import service_desk_api.api.model.Status;
 import service_desk_api.api.repository.ChamadoRepository;
@@ -36,6 +38,7 @@ class ChamadoServiceTest {
 		return chamado;
 	}
 	
+	@DisplayName(value = "Deve retornar chamado ao buscar por id existente")
 	@Test
 	void deveRetornarChamadoQuandoBuscarPorIdExistente() {
 		
@@ -51,6 +54,7 @@ class ChamadoServiceTest {
 		verify(chamadoRepository, times(1)).findById(1L);
 	}
 	
+	@DisplayName(value = "Deve retornar Optional.empty ao buscar chamado inexistente")
 	@Test
 	void deveRetornarOptionalVazioQuandoBuscarPorIdInexistente() {
 		
@@ -61,6 +65,17 @@ class ChamadoServiceTest {
 		assertTrue(resultado.isEmpty());
 		
 		verify(chamadoRepository, times(1)).findById(99L);
+	}
+	
+	@DisplayName(value = "Deve lançar BusinessException quando tentar atualizar chamado concluído")
+	@Test
+	void deveLancarBusinessExceptionAoAtualizarChamadoConcluido() {
+		Chamado chamado = new Chamado();
+		chamado.setStatus(Status.CONCLUIDO);
+		
+		assertThrows(
+				BusinessException.class,
+				() -> chamadoService.validarAtualizacao(chamado));
 	}
 
 }
