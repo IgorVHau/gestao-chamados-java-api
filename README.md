@@ -85,13 +85,9 @@ http://localhost:8080/swagger-ui/index.html
 http://localhost:8080/v3/api-docs
 ```
 
-## 🔐 Segurança
+## 🔓 Autenticação e Segurança
 
-- Autenticação baseada em JWT
-- Filtro de segurança customizado
-- Integração com Swagger para autorização via token
-
-## 🔓 Autenticação
+A API utiliza autenticação baseada em **JWT (JSON Web Token)** para proteger seus endpoints, com filtro de segurança customizado e integração com Swagger para autorização via token.
 
 Antes de realizar alguma operação na API, é necessário autenticar o usuário por meio de login e senha. Caso contrário, todas as operações serão bloqueadas.
 
@@ -105,60 +101,72 @@ Antes de realizar alguma operação na API, é necessário autenticar o usuário
 ---------------------------------------------------------------
 O fluxo de autenticação pode ser descrito da seguinte forma:
 
-1. Prepare uma autenticação POST para a rota /auth/login
-2. No body, prepare um JSON com os campos "email" e "senha" preenchendo os valores de acordo com as informações fornecidas na tabela acima
-3. Envie a requisição
-4. Copie o token JWT retornado
-5. Use esse token no header Authorization com o prefixo Bearer para realizar chamadas nas requisições da API
+1. Realize uma requisição **POST** para `/auth/login`
+2. Envie no body um JSON contendo os campos `"email"` e `"senha"` preenchendo os valores de acordo com as informações fornecidas na tabela acima
+3. Após autenticação bem-sucedida, a API retornará um **token JWT**
+4. Ao realizar uma chamada na API, utilize o token no header `Authorization` com o prefixo `Bearer`
+
 
 🕐 O token possui tempo de expiração configurado para ser válido por 1 hora. Após esse período, é necessário realizar uma nova autenticação para obter um novo token.
 
 ## 📲 Endpoints principais
 
-Abaixo os métodos HTTP e rotas para realização das chamadas. Todos os endpoints abaixo exigem autenticação JWT.
+Abaixo estão as informações necessárias para a realização de cada requisição. Todos os endpoints abaixo são protegidos e exigem autenticação conforme descrito na seção Autenticação e Segurança.
 
-🔑 Legenda de permissões
-- 🔓 USER
+🟡 ***Ler todos os chamados registrados***
 
-- 🔐 ADMIN
+- **URL:** `/chamados`
+- **HTTP Method:** `GET`
+- **Authorization:** `USER, ADMIN`
 
-🟡 **GET /chamados** 🔓🔐
+🟡 ***Ler o chamado correspondente ao id informado***
 
-Objetivo: Ler todos os chamados registrados.
+- **URL:** `/chamados/{id}`
+- **HTTP Method:** `GET`
+- **Authorization:** `USER, ADMIN`
 
-🟡 **GET /chamados/{id}** 🔓🔐
+🟢 ***Criar chamado para ser registrado no banco***
 
-Objetivo: Ler o chamado correspondente ao id selecionado.
-
-🟢 **POST /chamados** 🔐
-
-Objetivo: Criar um chamado para ser registrado no banco de dados. 
-
-Exemplo:
-_Body (JSON)_
+- **URL:** `/chamados`
+- **HTTP Method:** `POST`
+- **Authorization:** `ADMIN`
+- **Content-Type:** `application/json`
+- **Request body (exemplo):**
 ```json
-{
-	"titulo": "Acesso criado para Jonas",
-	"descricao": "Jonas recebeu acesso ao e-mail newUser@email.com.",
+	{
+	"titulo": "TÍTULO",
+	"descricao": "DESCRIÇÃO",
 	"status": "ABERTO"
-}
+	}
 ```
 
-🔵 **PUT /chamados/{id}** 🔐
-
-Objetivo: Editar um ou mais campos do chamado correspondente ao id selecionado.
-
-Exemplo:
-_Body (JSON)_
+🔵 ***Editar chamado correspondente ao id informado***
+- **URL:** `/chamados/{id}`
+- **HTTP Method:** `PUT`
+- **Authorization:** `ADMIN`
+- **Content-Type:** `application/json`
+- **Request body (exemplo):**
 ```json
-{
-	"status": "FECHADO"
-}
+	{
+	"titulo": "TÍTULO",
+	"descricao": "DESCRIÇÃO",
+	"status": "EM_ANDAMENTO"
+	}
 ```
 
-🔴 **DELETE /chamados/{id}** 🔐
+🔴 ***Remover chamado correspondente ao id informado***
+- **URL:** `/chamados/{id}`
+- **HTTP Method:** `DELETE`
+- **Authorization:** `ADMIN`
 
-Objetivo: Remover o chamado no banco de dados.
+> 📘 Para exemplos completos de requisições e respostas, utilize o Swagger UI disponível em `/swagger-ui/index.html`.
+
+###### ⚠️ Regras e validações importantes
+- Os campos `"titulo"`, `"descrição"` e `"status"` são obrigatórios nos métodos POST e PUT
+- O campo `"status"` só aceita os valores: `"ABERTO"`, `"EM_ANDAMENTO"` e `"CONCLUIDO"`
+- Chamados com status `"CONCLUIDO"` não podem ser atualizados
+
+
 
 ## 🔬 Monitoramento e Observabilidade
 
