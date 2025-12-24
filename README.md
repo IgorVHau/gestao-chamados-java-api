@@ -111,52 +111,61 @@ O fluxo de autenticação pode ser descrito da seguinte forma:
 
 ## 📲 Endpoints principais
 
-Abaixo os métodos HTTP e rotas para realização das chamadas. Todos os endpoints abaixo exigem autenticação JWT.
+Abaixo estão as informações necessárias para a realização de cada requisição. Todos os endpoints abaixo são protegidos e exigem autenticação conforme descrito na seção Autenticação e Segurança.
 
 🟡 ***Ler todos os chamados registrados***
-URL: `/chamados`
-Método HTTP: `GET`
-Autorização: `USER, ADMIN`
+
+- **URL:** `/chamados`
+- **HTTP Method:** `GET`
+- **Authorization:** `USER, ADMIN`
 
 🟡 ***Ler o chamado correspondente ao id informado***
-URL: `/chamados/{id}`
-Método HTTP: `GET`
-Autorização: `USER, ADMIN`
+
+- **URL:** `/chamados/{id}`
+- **HTTP Method:** `GET`
+- **Authorization:** `USER, ADMIN`
 
 🟢 ***Criar chamado para ser registrado no banco***
-URL: `/chamados`
-Método HTTP: `POST`
-Autorização: `ADMIN`
-Body (JSON):
-```
+
+- **URL:** `/chamados`
+- **HTTP Method:** `POST`
+- **Authorization:** `ADMIN`
+- **Content-Type:** `application/json`
+- **Request body (exemplo):**
+```json
 	{
 	"titulo": "TÍTULO",
 	"descricao": "DESCRIÇÃO",
 	"status": "ABERTO"
 	}
 ```
+
 🔵 ***Editar chamado correspondente ao id informado***
-URL: `/chamados/{id}`
-Método HTTP: `PUT`
-Autorização: `ADMIN`
-Body (JSON):
-```
+- **URL:** `/chamados/{id}`
+- **HTTP Method:** `PUT`
+- **Authorization:** `ADMIN`
+- **Content-Type:** `application/json`
+- **Request body (exemplo):**
+```json
 	{
 	"titulo": "TÍTULO",
 	"descricao": "DESCRIÇÃO",
 	"status": "EM_ANDAMENTO"
 	}
 ```
-🔴 ***Remover chamado correspondente ao id informado***
-URL: `/chamados/{id}`
-Método HTTP: `DELETE`
-Autorização: `ADMIN`
 
+🔴 ***Remover chamado correspondente ao id informado***
+- **URL:** `/chamados/{id}`
+- **HTTP Method:** `DELETE`
+- **Authorization:** `ADMIN`
+
+> 📘 Para exemplos completos de requisições e respostas, utilize o Swagger UI disponível em `/swagger-ui/index.html`.
 
 ###### ⚠️ Regras e validações importantes
 - Os campos `"titulo"`, `"descrição"` e `"status"` são obrigatórios nos métodos POST e PUT
-- Os status só podem assumir os seguintes valores: `"ABERTO"`, `"EM_ANDAMENTO"` e `"CONCLUIDO"`
+- O campo `"status"` só aceita os valores: `"ABERTO"`, `"EM_ANDAMENTO"` e `"CONCLUIDO"`
 - Chamados com status `"CONCLUIDO"` não podem ser atualizados
+
 
 
 ## 🔬 Monitoramento e Observabilidade
