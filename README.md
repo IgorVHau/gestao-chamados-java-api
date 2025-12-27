@@ -1,7 +1,6 @@
-# Service Desk API
+<h1 align="center">Service Desk API</h1>
 
-API REST para gerenciamento de chamados, desenvolvida com Spring Boot 3 e Java 17.
-O projeto aplica boas práticas de arquitetura, segurança, validação e documentação.
+<p align="center">API REST para gerenciamento de chamados, desenvolvida com <b>Java 17</b> e <b>Spring Boot 3</b>, aplicando boas práticas de arquitetura, segurança e testes.</p>
 
 ## 📌 Funcionalidades
 
