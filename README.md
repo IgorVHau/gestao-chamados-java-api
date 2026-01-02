@@ -2,6 +2,17 @@
 
 <p align="center">API REST para gerenciamento de chamados, desenvolvida com <b>Java 17</b> e <b>Spring Boot 3</b>, aplicando boas práticas de arquitetura, segurança e testes.</p>
 
+<p align="center">
+	<!--<img src="https://img.shields.io/badge/Java-17-red">-->
+	<img src="https://img.shields.io/badge/Java-17-red?labelColor=blue"/>
+	<img src="https://img.shields.io/badge/Spring_Boot-3.x-brightgreen">
+</p>
+<p align="center">
+	<img src="https://img.shields.io/badge/Status-Em_desenvolvimento-yellow">
+</p>
+
+<br>
+
 ## 📌 Funcionalidades
 
 - ✅ Cadastro, listagem, atualização e exclusão de chamados
