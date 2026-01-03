@@ -52,16 +52,87 @@ mvn test
 
 ## 📐 Arquitetura
 
-O projeto segue uma arquitetura em camadas:
+A aplicação segue uma arquitetura em camadas, muito comum em aplicações Spring Boot, separando responsabilidades para facilitar a legibilidade, manutenção e realização de testes.
 
-- **[Controller](src/main/java/service_desk_api/api/controller)** – exposição dos endpoints REST e validação de entrada
-- **[Service](src/main/java/service_desk_api/api/service)** – regras de negócio e orquestração
-- **[Repository](src/main/java/service_desk_api/api/repository)** – acesso a dados via JPA
-- **[Model](src/main/java/service_desk_api/api/model) / [DTO](src/main/java/service_desk_api/api/dto)** – entidades de domínio e objetos de transporte
-- **[Config](src/main/java/service_desk_api/api/config)** - configurações da aplicação (segurança, OpenAPI, filtros, beans)
-- **[Exception Handler](src/main/java/service_desk_api/api/exception)** – tratamento centralizado de erros e respostas padronizadas
+Embora o padrão Clean Architecture não tenha sido implementado integralmente, pode-se dizer que o projeto emprega alguns de seus princípios fundamentais, como separação de responsabilidades, baixo acoplamento entre camadas e isolamento das regras de negócio.
 
-A segurança (JWT, autenticação e autorização) é tratada de forma transversal, principalmente nas camadas de configuração e serviço.
+Cada camada possui um papel bem definido:
+
+- **[Controller](src/main/java/service_desk_api/api/controller)** – responsável pela exposição dos endpoints REST, validação de entrada e definição do código das respostas HTTP.
+- **[Service](src/main/java/service_desk_api/api/service)** – contém as regras de negócio da aplicação e orquestra o fluxo entre controller e repositório.
+- **[Repository](src/main/java/service_desk_api/api/repository)** – representa a camada de acesso a dados. Utiliza Spring Data JPA para abstrair operações com o banco de dados.
+- **[Model](src/main/java/service_desk_api/api/model)** – representa as entidades centrais da aplicação e o estado do negócio. É utilizado principalmente nas camadas de Serviço e Repositório, onde ocorre a manipulação e persistência dos dados.
+- **[DTO](src/main/java/service_desk_api/api/dto)** – utilizado na comunicação entre Controller e Cliente, evitando o acoplamento direto com o modelo de domínio.
+Permite validação de entrada, controle de campos expostos e versionamento da API.
+- **[Config](src/main/java/service_desk_api/api/config)** - contém configurações transversais da aplicação, como segurança (Spring Security, JWT, filtros), documentação OpenAPI, definição de beans e integração com o ecossistema Spring.
+- **[Exception Handler](src/main/java/service_desk_api/api/exception)** – responsável pelo tratamento centralizado de erros e respostas padronizadas para o cliente.
+
+Não há uma camada específica dedicada à segurança nessa aplicação. A segurança (JWT, autenticação e autorização) é tratada de forma transversal, principalmente nas camadas de configuração e serviço.
+
+Abaixo a representação visual do diagrama de arquitetura.
+```mermaid
+---
+title: Diagrama de arquitetura de camadas
+config:
+  flowchart:
+    htmlLabels: false
+---
+flowchart LR
+
+Client@{ shape: circle, label: "Cliente" }
+Controller@{ shape: rounded, label: "Controller" }
+Service@{ shape: rounded, label: "Serviço" }
+Repository@{ shape: rounded, label: "Repositório" }
+Database@{ shape: cyl, label: "Banco de Dados" }
+
+subgraph Fluxo_principal
+	Client f1@--> Controller
+	f1@{ curve: linear }
+	Controller f2@--> Service
+	f2@{ curve: linear }
+	Service f3@--> Repository
+	f3@{ curve: linear }
+	Repository f4@--> Database:::fod
+	classDef fod stroke:#00a7ff, stroke-width: 1px
+	f4@{ curve: linear }
+end
+
+Fluxo_principal:::foa
+classDef foa stroke: #fff, stroke-width: 2px
+
+subgraph Exceção
+	Exception@{ shape: rounded, label: "Tratamento Global<br/> de Exceções" }
+end
+
+Controller e1@--> Exceção:::foe
+classDef foe stroke: #f00, stroke-width: 2px
+e1@{ animation: slow, curve: linear }
+Service e2@--> Exceção
+e2@{ animation: slow, curve: linear }
+
+
+subgraph Segurança
+	Security@{ shape: odd, label: "JWT / Filtros" }
+end
+	Client s1@--> |envia<br/> requisição| Segurança:::foo
+	classDef foo stroke:#f50, stroke-width: 2px
+	s1@{ animation: slow, curve: linear }
+	Segurança s2@--> |valida<br/> token JWT| Controller
+	s2@{ animation: slow, curve: linear }
+
+```
+
+Domínio (Model) e DTOs não representam etapas do fluxo da requisição, mas estruturas de dados utilizadas entre as camadas. Por isso, essas camadas não estão ilustradas no diagrama acima.
+
+Esse modelo de arquitetura permite:
+
+- Testes unitários isolados na camada de serviço
+
+- Evolução da aplicação sem impacto direto em outras camadas
+
+- Padronização de respostas e tratamento de erros
+
+- Separação clara entre infraestrutura, domínio e apresentação
 
 ## ▶️ Como executar o projeto
 
