@@ -17,7 +17,7 @@ Este roadmap descreve as etapas de evolução planejadas para o projeto, com foc
 ---
 
 ## 🔄 Fase 2 – Consolidação (Atual)
-- [ ] Diagrama de arquitetura
+- [x] Diagrama de arquitetura
 - [ ] Melhorar cobertura de testes
 - [ ] Padronizar mensagens de erro
 - [ ] Refinar DTOs de entrada e saída
