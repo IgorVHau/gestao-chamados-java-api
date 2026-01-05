@@ -134,40 +134,20 @@ Esse modelo de arquitetura permite:
 
 - Separação clara entre infraestrutura, domínio e apresentação
 
-## ▶️ Como executar o projeto
+## ▶️ Execução e consumo da API
 
-Certifique-se de ter **Java 17+** e **Maven** instalados no ambiente.
+Como pré-requisitos básicos, certifique-se de ter **Java 17+** e **Maven** instalados no ambiente. 
 
-Abra um terminal (PowerShell, Terminal do Linux/macOS ou Git Bash no Windows) e execute:
+### Execução da API
+A aplicação pode ser executada via terminal ou por qualquer IDE Java (IntelliJ, Eclipse, VS Code). Para isso, importe o projeto usando a IDE Java de sua preferência ou abra o terminal (PowerShell, Terminal do Linux/macOS ou Git Bash no Windows) e execute os comandos:
 
 ```bash
 git clone https://github.com/IgorVHau/gestao-chamados-java-api.git
 cd gestao-chamados-java-api
-mvn spring-boot:run
 ```
+Execute a API por meio da IDE escolhida ou pelo comando ```mvn spring-boot:run``` caso opte por rodar via terminal. A aplicação subirá em ```http://localhost:8080```.
 
-A aplicação subirá em: 
-
-```bash 
-http://localhost:8080
-```
-
-## 📚 Documentação da API
-
-Após iniciar a aplicação, a documentação estará disponível em:
-
-- Swagger UI:  
-```bash
-http://localhost:8080/swagger-ui/index.html
-```
-
-- OpenAPI JSON:  
-```bash
-http://localhost:8080/v3/api-docs
-```
-
-## 🔓 Autenticação e Segurança
-
+### Autenticação e Segurança
 A API utiliza autenticação baseada em **JWT (JSON Web Token)** para proteger seus endpoints, com filtro de segurança customizado e integração com Swagger para autorização via token.
 
 Antes de realizar alguma operação na API, é necessário autenticar o usuário por meio de login e senha. Caso contrário, todas as operações serão bloqueadas.
@@ -182,17 +162,15 @@ Antes de realizar alguma operação na API, é necessário autenticar o usuário
 ---------------------------------------------------------------
 O fluxo de autenticação pode ser descrito da seguinte forma:
 
-1. Realize uma requisição **POST** para `/auth/login`
-2. Envie no body um JSON contendo os campos `"email"` e `"senha"` preenchendo os valores de acordo com as informações fornecidas na tabela acima
-3. Após autenticação bem-sucedida, a API retornará um **token JWT**
-4. Ao realizar uma chamada na API, utilize o token no header `Authorization` com o prefixo `Bearer`
-
+1. Realize uma requisição **POST** para `/auth/login`, preferencialmente via uma Client API, como Postman ou Insomnia.
+2. Envie no body um JSON contendo os campos `"email"` e `"senha"` preenchendo os valores de acordo com as informações fornecidas na tabela acima.
+3. Após autenticação bem-sucedida, a API retornará um **token JWT**.
+4. Ao realizar uma chamada na API, utilize o token no header `Authorization` com o prefixo `Bearer`.
 
 🕐 O token possui tempo de expiração configurado para ser válido por 1 hora. Após esse período, é necessário realizar uma nova autenticação para obter um novo token.
 
-## 📲 Endpoints principais
-
-Abaixo estão as informações necessárias para a realização de cada requisição. Todos os endpoints abaixo são protegidos e exigem autenticação conforme descrito na seção Autenticação e Segurança.
+### Consumo da API
+  Após o processo de autenticação, a API estará pronta para o consumo por meio de requisições HTTP realizadas via Client API ou Swagger UI. Abaixo estão as informações necessárias para a realização de cada requisição. Todos os endpoints abaixo são protegidos e exigem autenticação conforme descrito na subseção Autenticação e Segurança.
 
 🟡 ***Ler todos os chamados registrados***
 
@@ -243,11 +221,29 @@ Abaixo estão as informações necessárias para a realização de cada requisi�
 > 📘 Para exemplos completos de requisições e respostas, utilize o Swagger UI disponível em `/swagger-ui/index.html`.
 
 ###### ⚠️ Regras e validações importantes
-- Os campos `"titulo"`, `"descrição"` e `"status"` são obrigatórios nos métodos POST e PUT
-- O campo `"status"` só aceita os valores: `"ABERTO"`, `"EM_ANDAMENTO"` e `"CONCLUIDO"`
-- Chamados com status `"CONCLUIDO"` não podem ser atualizados
+- Os campos `"titulo"`, `"descrição"` e `"status"` são obrigatórios nos métodos POST e PUT.
+- O campo `"status"` só aceita os valores: `"ABERTO"`, `"EM_ANDAMENTO"` e `"CONCLUIDO"`.
+- Chamados com status `"CONCLUIDO"` não podem ser atualizados.
 
 
+### Documentação da API
+
+A documentação interativa da API está disponível em:
+
+- Swagger UI:  
+```bash
+http://localhost:8080/swagger-ui/index.html
+```
+
+- OpenAPI JSON:  
+```bash
+http://localhost:8080/v3/api-docs
+```
+
+Por meio dela, é possível:
+- Visualizar todos os endpoints disponíveis
+- Realizar autenticação via JWT
+- Executar requisições diretamente pelo navegador
 
 ## 🔬 Monitoramento e Observabilidade
 
