@@ -228,20 +228,21 @@ O fluxo de autenticação pode ser descrito da seguinte forma:
 
 ### Documentação da API
 
-A documentação interativa da API está disponível em:
+A API é documentada utilizando o padrão OpenAPI 3. Após iniciar a aplicação, os recursos de documentação estarão disponíveis em:
 
-- Swagger UI:  
+- Swagger UI (interface interativa): 
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
 
-- OpenAPI JSON:  
+- OpenAPI Specification (JSON):
 ```bash
 http://localhost:8080/v3/api-docs
 ```
 
-Por meio dela, é possível:
+Por meio dessas ferramentas, é possível:
 - Visualizar todos os endpoints disponíveis
+- Analisar o contrato da API (paths, schemas, responses e segurança)
 - Realizar autenticação via JWT
 - Executar requisições diretamente pelo navegador
 
