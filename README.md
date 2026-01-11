@@ -67,8 +67,10 @@ O fluxo de autenticação pode ser descrito da seguinte forma:
 
 1. Realize uma requisição **POST** para `/auth/login`, preferencialmente via uma Client API, como Postman ou Insomnia.
 2. Envie no body um JSON contendo os campos `"email"` e `"senha"` preenchendo os valores de acordo com as informações fornecidas na tabela acima.
-3. Após autenticação bem-sucedida, a API retornará um **token JWT**.
-4. Ao realizar uma chamada na API, utilize o token no header `Authorization` com o prefixo `Bearer`.
+3. Após autenticação bem-sucedida, a API retornará um **token JWT** conforme ilustrado abaixo.
+![Imagem da resposta esperada no login](docs/images/auth-login-response.png)
+4. Ao realizar uma chamada na API, utilize o token no header `Authorization` com o prefixo `Bearer` como na imagem abaixo.
+![Imagem de onde colocar o token](docs/images/bearer-token-auth.png)
 
 🕐 O token possui tempo de expiração configurado para ser válido por 1 hora. Após esse período, é necessário realizar uma nova autenticação para obter um novo token.
 
@@ -137,6 +139,9 @@ A API é documentada utilizando o padrão OpenAPI 3. Após iniciar a aplicação
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
+Abaixo segue um exemplo da interface Swagger UI exibindo os endpoints disponíveis entre outras informações da aplicação.
+![Imagem do Swagger UI](docs/images/swagger-ui.png)
+
 
 - OpenAPI Specification (JSON):
 ```bash
@@ -148,21 +153,6 @@ Por meio dessas ferramentas, é possível:
 - Analisar o contrato da API (paths, schemas, responses e segurança)
 - Realizar autenticação via JWT
 - Executar requisições diretamente pelo navegador
-
-## 🔬 Monitoramento e Observabilidade
-
-A aplicação utiliza **Spring Boot Actuator** para expor informações operacionais e de build. Para monitorar a aplicação por meio dessa ferramenta, verifique as informações abaixo.
-
-| Método HTTP | Endpoint | Permissão |
-|:----------:|:----------|:----------|
-|🟡GET|/actuator/info|ADMIN🔐|
-
-Exemplo de informações expostas:
-- Nome e versão da aplicação
-- Dados de build (artifact, versão, data)
-- Metadados do Git (branch, commit, timestamp)
-
-Essas informações são acessadas através do [pom.xml](pom.xml) e do repositório Git.
 
 ## 🧪 Testes
 
@@ -266,6 +256,21 @@ Esse modelo de arquitetura permite:
 O projeto possui perfis de ambientes (dev e prod) para simular comportamentos diferentes entre desenvolvimento e produção. 
 No perfil [dev](src/main/resources/application-dev.yml), a aplicação faz uso de banco H2 em memória, logs SQL habilitados e schema criado automaticamente. O foco é mais voltado para desenvolvimento local.
 No perfil [prod](src/main/resources/application-prod.yml), as configurações estão preparadas para banco externo (PostgreSQL), validação de schema e credenciais via variáveis de ambiente. O ambiente é pensado para simular execução em ambientes produtivos.
+
+## 🔬 Monitoramento e Observabilidade
+
+A aplicação utiliza **Spring Boot Actuator** para expor informações operacionais e de build. Para monitorar a aplicação por meio dessa ferramenta, verifique as informações abaixo.
+
+| Método HTTP | Endpoint | Permissão |
+|:----------:|:----------|:----------|
+|🟡GET|/actuator/info|ADMIN🔐|
+
+Exemplo de informações expostas:
+- Nome e versão da aplicação
+- Dados de build (artifact, versão, data)
+- Metadados do Git (branch, commit, timestamp)
+
+Essas informações são acessadas através do [pom.xml](pom.xml) e do repositório Git.
 
 ## 📌 Observação
 Este projeto foi desenvolvido com foco em aprendizado prático, evolução técnica e aplicação de boas práticas no ecossistema Spring.
