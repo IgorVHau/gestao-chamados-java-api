@@ -8,7 +8,7 @@
 	<img src="https://img.shields.io/badge/Spring_Boot-3.x-brightgreen">
 </p>
 <p align="center">
-	<img src="https://img.shields.io/badge/Status-Em_desenvolvimento-yellow">
+	<img src="https://img.shields.io/badge/Status-Estável-green">
 </p>
 
 <br>
