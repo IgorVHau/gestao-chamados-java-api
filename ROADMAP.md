@@ -18,7 +18,7 @@ Este roadmap descreve as etapas de evolução planejadas para o projeto, com foc
 
 ## 🔄 Fase 2 – Consolidação (Atual)
 - [x] Diagrama de arquitetura
-- [ ] Melhorar documentação de execução e consumo da API
+- [x] Melhorar documentação de execução e consumo da API
 - [ ] Melhorar cobertura de testes
 - [ ] Padronizar mensagens de erro
 - [ ] Refinar DTOs de entrada e saída

@@ -13,7 +13,7 @@
 
 <br>
 
-## 📌 Funcionalidades
+## Funcionalidades
 
 - ✅ Cadastro, listagem, atualização e exclusão de chamados
 - ✅ Validação de dados com Jakarta Validation
@@ -23,7 +23,7 @@
 - ✅ Padronização de respostas da API
 - ✅ Tratamento global de exceções
 
-## 🛠️ Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - Java 17
 - Spring Boot 3
@@ -37,7 +37,7 @@
 - JUnit 5
 - Mockito
 
-## ▶️ Execução e consumo da API
+## Execução e consumo da API
 
 Como pré-requisitos básicos, certifique-se de ter **Java 17+** e **Maven** instalados no ambiente. 
 
@@ -154,7 +154,7 @@ Por meio dessas ferramentas, é possível:
 - Realizar autenticação via JWT
 - Executar requisições diretamente pelo navegador
 
-## 🧪 Testes
+## Testes
 
 O projeto possui testes automatizados utilizando **JUnit 5** e **Mockito**, cobrindo diferentes camadas da aplicação.
 
@@ -167,7 +167,7 @@ Para executar todos os testes automatizados, execute o comando:
 mvn test
 ```
 
-## 📐 Arquitetura
+## Arquitetura
 
 A aplicação segue uma arquitetura em camadas, muito comum em aplicações Spring Boot, separando responsabilidades para facilitar a legibilidade, manutenção e realização de testes.
 
@@ -251,13 +251,13 @@ Esse modelo de arquitetura permite:
 
 - Separação clara entre infraestrutura, domínio e apresentação
 
-## 🗂️ Perfis de ambiente
+## Perfis de ambiente
 
 O projeto possui perfis de ambientes (dev e prod) para simular comportamentos diferentes entre desenvolvimento e produção. 
 No perfil [dev](src/main/resources/application-dev.yml), a aplicação faz uso de banco H2 em memória, logs SQL habilitados e schema criado automaticamente. O foco é mais voltado para desenvolvimento local.
 No perfil [prod](src/main/resources/application-prod.yml), as configurações estão preparadas para banco externo (PostgreSQL), validação de schema e credenciais via variáveis de ambiente. O ambiente é pensado para simular execução em ambientes produtivos.
 
-## 🔬 Monitoramento e Observabilidade
+## Monitoramento e Observabilidade
 
 A aplicação utiliza **Spring Boot Actuator** para expor informações operacionais e de build. Para monitorar a aplicação por meio dessa ferramenta, verifique as informações abaixo.
 
@@ -272,5 +272,5 @@ Exemplo de informações expostas:
 
 Essas informações são acessadas através do [pom.xml](pom.xml) e do repositório Git.
 
-## 📌 Observação
+## Observação
 Este projeto foi desenvolvido com foco em aprendizado prático, evolução técnica e aplicação de boas práticas no ecossistema Spring.
